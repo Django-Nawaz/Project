@@ -155,15 +155,17 @@ class Question(models.Model):
             os.makedirs(upload_sub_ques)
         print(os.path.join(upload_sub_ques, filename))
         return os.path.join(upload_sub_ques, filename)
-    hint = models.CharField(max_length = 35,verbose_name = "Hint to the Question")    
+    #hint = models.CharField(max_length = 35,verbose_name = "Hint to the Question")    
     q_id = models.AutoField(primary_key = True)
     Q_type = models.CharField(choices =Question_Choices ,max_length = 10)
-    sub_id = models.ForeignKey('App.Subject')
-    chap_id = ChainedForeignKey(Chapter,chained_field='sub_id',chained_model_field='sub_id',show_all=False,auto_choose=True,sort=True)
-    sub_unit = ChainedForeignKey(Sub_Units,chained_field='chap_id',chained_model_field='chap_id',show_all=False,auto_choose=True,sort=True)
-    concept = ChainedForeignKey(Concepts,chained_field='sub_unit',chained_model_field='sub_unit_id',show_all=False,auto_choose=True,sort=True)
-    question = models.TextField(max_length=100,default = None)
-    related_file = models.FileField(verbose_name = "Upload the Related Documents",blank=True,null = True,upload_to = upload_handler)
+    sub_id = models.ForeignKey('App.Subject',verbose_name = 'Subject ')
+    chap_id = ChainedForeignKey(Chapter,verbose_name = 'Chapter ',chained_field='sub_id',chained_model_field='sub_id',show_all=False,auto_choose=True,sort=True)
+    sub_unit = ChainedForeignKey(Sub_Units,verbose_name = 'Sub-Unit ',chained_field='chap_id',chained_model_field='chap_id',show_all=False,auto_choose=True,sort=True)
+    concept = ChainedForeignKey(Concepts,verbose_name = 'Concept ',chained_field='sub_unit',chained_model_field='sub_unit_id',show_all=False,auto_choose=True,sort=True)
+    question = models.TextField(verbose_name = 'Question ',max_length=100,default = None)
+    related_file = models.FileField(verbose_name = "Upload the Related Question Documents",blank=True,null = True,upload_to = upload_handler)
+    related_file_answer = models.FileField(verbose_name = "Upload the Answer Documents",blank=True,null = True,upload_to = upload_handler)
+    explaination = models.TextField('Explaination',max_length = 500,null = True,blank = True,default = "No Explaination")    
     class Meta:
         verbose_name = 'Question'
         verbose_name_plural = 'Questions'
@@ -234,7 +236,7 @@ class MCQ_Answer(models.Model):
     id = models.AutoField(primary_key = True)
     quest_id = models.ForeignKey(Question)
     options_id = models.ForeignKey(MCQ_Options)
-    correct_answer = models.CharField(choices = (('option_1','A'),('option_2','B'),('option_3','C'),('option_4','D')),max_length=2)
+    correct_answer = models.CharField(choices = (('option_1','A'),('option_2','B'),('option_3','C'),('option_4','D')),max_length=10)
     class Meta:
         verbose_name = 'MCQ Answer'
         verbose_name_plural = 'MCQ Answers'

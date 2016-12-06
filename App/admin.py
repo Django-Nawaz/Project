@@ -40,6 +40,7 @@ class One_Marks_Question(Question):
     
 class One_Marks_Question_Form(forms.ModelForm):
     Answer = forms.Field(widget=forms.widgets.TextInput)
+    explaination = forms.Field(widget=forms.widgets.Textarea)
     class Meta:
         model = One_Marks_Question
         fields = '__all__'
@@ -55,6 +56,12 @@ class One_Marks_Question_Form(forms.ModelForm):
         return instance
 class Admin_One(admin.ModelAdmin):
     form = One_Marks_Question_Form
+    fieldsets = (
+    ('Enter Subject Chapter Sub-Unit Below',
+     {'fields':('sub_id','chap_id','sub_unit','concept',)}),    
+    ('Enter Question and Answer',{'fields':('question','Answer')}),
+    ('Other Related Informations Below',{'classes':('collapse',),'fields':('related_file','related_file_answer','explaination')})
+    )
     def Answer(self,obj):
         Obj = Ans_1.objects.get(quest_id = obj)
         return str(Obj.answer)
@@ -86,6 +93,12 @@ class Two_Marks_Question_Form(forms.ModelForm):
         return instance
 class Admin_Two(admin.ModelAdmin):
     form = Two_Marks_Question_Form
+    fieldsets = (
+    ('Enter Subject Chapter Sub-Unit Below',
+     {'fields':('sub_id','chap_id','sub_unit','concept',)}),    
+    ('Enter Question and Answer',{'fields':('question','Answer')}),
+    ('Other Related Informations Below',{'classes':('collapse',),'fields':('related_file','related_file_answer','explaination')})
+    )
     def Answer(self,obj):
         Obj = Ans_2.objects.get(quest_id = obj)
         return str(Obj.answer)
@@ -116,6 +129,12 @@ class Three_Marks_Question_Form(forms.ModelForm):
         return instance
 class Admin_Three(admin.ModelAdmin):
     form = Three_Marks_Question_Form
+    fieldsets = (
+    ('Enter Subject Chapter Sub-Unit Below',
+     {'fields':('sub_id','chap_id','sub_unit','concept',)}),    
+    ('Enter Question and Answer',{'fields':('question','Answer')}),
+    ('Other Related Informations Below',{'classes':('collapse',),'fields':('related_file','related_file_answer','explaination')})
+    )
     def Answer(self,obj):
         Obj = Ans_3.objects.get(quest_id = obj)
         return str(Obj.answer)
@@ -144,6 +163,12 @@ class Four_Marks_Question_Form(forms.ModelForm):
         return instance
 class Admin_Four(admin.ModelAdmin):
     form = Four_Marks_Question_Form
+    fieldsets = (
+    ('Enter Subject Chapter Sub-Unit Below',
+     {'fields':('sub_id','chap_id','sub_unit','concept',)}),    
+    ('Enter Question and Answer',{'fields':('question','Answer')}),
+    ('Other Related Informations Below',{'classes':('collapse',),'fields':('related_file','related_file_answer','explaination')})
+    )
     def Answer(self,obj):
         Obj = Ans_4.objects.get(quest_id = obj)
         return str(Obj.answer)
@@ -172,6 +197,12 @@ class Five_Marks_Question_Form(forms.ModelForm):
         print("Saving 5 Marks Question")
         return instance
 class Admin_Five(admin.ModelAdmin):
+    fieldsets = (
+    ('Enter Subject Chapter Sub-Unit Below',
+     {'fields':('sub_id','chap_id','sub_unit','concept',)}),    
+    ('Enter Question and Answer',{'fields':('question','Answer')}),
+    ('Other Related Informations Below',{'classes':('collapse',),'fields':('related_file','related_file_answer','explaination')})
+    )
     form = Five_Marks_Question_Form
     def Answer(self,obj):
         Obj = Ans_5.objects.get(quest_id = obj)
@@ -210,6 +241,12 @@ class Fill_Marks_Question_Form(forms.ModelForm):
         print("Saving Fill in the Blanks Question")
         return instance
 class Admin_Fill(admin.ModelAdmin):
+    fieldsets = (
+    ('Enter Subject Chapter Sub-Unit Below',
+     {'fields':('sub_id','chap_id','sub_unit','concept',)}),    
+    ('Enter Question and Answer',{'fields':('question','Answer')}),
+    ('Other Related Informations Below',{'classes':('collapse',),'fields':('related_file','related_file_answer','explaination')})
+    )
     form = Fill_Marks_Question_Form
     def Answer(self,obj):
         Obj = Fill_Ans.objects.get(quest_id = obj)
@@ -228,11 +265,11 @@ class MCQ_Marks_Question(Question):
         proxy = True  
 
 class MCQ_Marks_Question_Form(forms.ModelForm):
-    option_1 = forms.Field(required=True,widget=forms.widgets.TextInput,label = 'A')
-    option_2 = forms.Field(required=True,widget=forms.widgets.TextInput,label = 'B')
-    option_3 = forms.Field(required=True,widget=forms.widgets.TextInput,label = 'C')
-    option_4 = forms.Field(required=True,widget=forms.widgets.TextInput,label = 'D')
-    Answer = forms.Field(required=True,widget = forms.widgets.Select(choices = (('option_1','A'),('option_2','B'),('option_3','C'),('option_4','D'))))
+    option_1 = forms.Field(required=True,widget=forms.widgets.TextInput,label = 'Choice A')
+    option_2 = forms.Field(required=True,widget=forms.widgets.TextInput,label = 'Choice B')
+    option_3 = forms.Field(required=True,widget=forms.widgets.TextInput,label = 'Choice C')
+    option_4 = forms.Field(required=True,widget=forms.widgets.TextInput,label = 'Choice D')
+    Answer = forms.Field(label = 'Select the Answer Choice',required=True,widget = forms.widgets.Select(choices = (('option_1','A'),('option_2','B'),('option_3','C'),('option_4','D'))))
     
     class Meta:
         model = MCQ_Marks_Question
@@ -252,10 +289,19 @@ class MCQ_Marks_Question_Form(forms.ModelForm):
 #admin.site.register(MCQ_Options)
 class Admin_MCQ(admin.ModelAdmin):
     form = MCQ_Marks_Question_Form
+    fieldsets = (
+    ('Enter Subject Chapter Sub-Unit Below',
+     {'fields':('sub_id','chap_id','sub_unit','concept',)}),    
+    ('Enter Question and Answer',{'fields':('question','option_1','option_2','option_3','option_4','Answer')}),
+    ('Other Related Informations Below',{
+    'classes':('collapse',),
+    'fields':('related_file','related_file_answer','explaination')})
+    )
     def Answer(self,obj):
         Obj = MCQ_Answer.objects.get(quest_id = obj)
         return str(Obj.answer)
     list_display = ('question','Answer','Answer')
+
     def get_answer(self,obj):
         try:    
             answer = MCQ_Answer.objects.get(quest_id = obj)
