@@ -76,6 +76,7 @@ WSGI_APPLICATION = 'Project.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
+<<<<<<< HEAD
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #        'NAME': 'questup',
@@ -84,12 +85,18 @@ DATABASES = {
 #        'HOST': 'localhost',
 #        'PORT': '8005',
 #    }
+=======
+>>>>>>> origin/master
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'questup',
         'USER': 'nawaz',
         'PASSWORD': 'nawaz1996',
+<<<<<<< HEAD
         'HOST': 'quest-up-rds.cgjqg9blzvea.us-west-2.rds.amazonaws.com',
+=======
+        'HOST': 'localhost',
+>>>>>>> origin/master
         'PORT': '8005',
     }
 }
